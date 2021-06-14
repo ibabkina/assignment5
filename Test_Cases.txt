@@ -1,0 +1,22 @@
+/* Test Cases */
+
+pm.test("Request is successful with a status code of 200", function () {
+  pm.response.to.have.status(200);
+});
+
+pm.test("Check that it returns an array", function () {
+  var jsonData = pm.response.json();
+  pm.expect(jsonData).to.be.an("array");
+});
+
+let random = +new Date();
+pm.globals.set("username", `${random}-user`);
+pm.globals.set("email", `${random}-user@test.com`);
+pm.test("User creation was successful", function () {
+  pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);
+});
+
+pm.test("Confirm response message", function () {
+  var jsonData = pm.response.json();
+  pm.expect(jsonData.message).to.eql("User Successfully created");
+});
