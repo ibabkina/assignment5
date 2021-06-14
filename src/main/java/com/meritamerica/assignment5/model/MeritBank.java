@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import com.meritamerica.assignment5.exceptions.NotExistException;
+import com.meritamerica.assignment5.exceptions.NotFoundException;
+
 /**
  * This program creates account holders for a bank  and adds his accounts. It provides information 
  * about an account holder and their accounts.
@@ -254,6 +257,23 @@ public class MeritBank {
 	 */
 	public static AccountHolder[]getAccountHolders() { return accountHolders; }
 	
+	/**
+	 * @return the accountHolder 
+	 */
+	public static AccountHolder getAccountHolder(long id) 
+			throws NotExistException, NotFoundException {
+		
+		if(getAccountHolders().length <= 0) { throw new NotExistException("Account Holderds Not Exist"); }
+    	
+		for(AccountHolder accountHolder: getAccountHolders()) {
+    		if(accountHolder.getId() == id) { return accountHolder; }
+    	}
+		
+		throw new NotFoundException("Account Not Found");
+    }
+	
+
+    	
 	/**
 	 * @param depositAmount
 	 * @return the bestOffering

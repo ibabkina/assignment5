@@ -16,11 +16,11 @@ import com.meritamerica.assignment5.model.MeritBank;
 @RestController
 public class BankAccountController {
 	
-//	@PostMapping(value = "/account")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public CheckingAccount addCheckingAccount(@RequestBody @Valid CheckingAccount checkingAccount) {
-//		Arrays.asList(MeritBank.getAccountHolders()).get(id-1).addCheckingAccount(checkingAccount);
-//		return checkingAccounts;
-//	}
+	@PostMapping(value = "/account")
+	@ResponseStatus(HttpStatus.CREATED)
+	public CheckingAccount addCheckingAccount(@RequestBody @Valid CheckingAccount checkingAccount) {
+		Arrays.asList(MeritBank.getAccountHolders()).get(id-1).addCheckingAccount(checkingAccount);
+		return checkingAccounts;
+	}
 
 }

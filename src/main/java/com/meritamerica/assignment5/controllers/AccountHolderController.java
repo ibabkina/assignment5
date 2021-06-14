@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.meritamerica.assignment5.exceptions.NoSuchResourceFoundException;
+import com.meritamerica.assignment5.exceptions.NotFoundException;
 import com.meritamerica.assignment5.model.AccountHolder;
 import com.meritamerica.assignment5.model.CheckingAccount;
 import com.meritamerica.assignment5.model.MeritBank;
@@ -24,20 +25,20 @@ public class AccountHolderController {
 	
 //	List<AccountHolder> accountHolders = new ArrayList<AccountHolder>();
 	
-	@GetMapping(value = "/accountHolders")
-	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
-	public List<AccountHolder> getAccountHolders(){
-		return Arrays.asList(MeritBank.getAccountHolders());
-	}
 	
-	@GetMapping(value = "/accountHolders/{id}")
-	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
-	public AccountHolder getAccountHolderById(@PathVariable int id) throws NoSuchResourceFoundException {
-		if(id > Arrays.asList(MeritBank.getAccountHolders()).size()) {
-			throw new NoSuchResourceFoundException("Invalid id");
-		}
-		return Arrays.asList(MeritBank.getAccountHolders()).get(id-1); 
-	}
+	
+//	@GetMapping(value = "/AccountHolder/{id}")
+//	public AccountHolder getAccountHolderById(@PathVariable("id") long id) throws NotFoundException {
+//		AccountHolder accountHolder = MeritBank.getAccountHolder(id);
+//		if(accountHolder == null) { 
+//			logs.warn("No account exists"); 
+//			throw new NotFoundException("Account Not Found"); 
+//		}
+//		return accountHolder;
+//	}
+//	
+	
+	
 	
 //	@GetMapping(value = "/accountHolders/{id}")
 //	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
@@ -48,35 +49,40 @@ public class AccountHolderController {
 //		return (MeritBank.getAccountHolders)[id-1]; 
 //	}
 	
-	@PostMapping(value = "/accountHolders")
-	@ResponseStatus(HttpStatus.CREATED)
-	public AccountHolder addAccountHolder(@RequestBody @Valid AccountHolder accountHolder) {
-		MeritBank.addAccountHolder(accountHolder);
-		return accountHolder;
-	}
 	
-	@PostMapping(value = "/accountHolders/{id}/checkingAccount")
+	@PostMapping(value = "/accountHolder/{id}/checkingAccount")
 	@ResponseStatus(HttpStatus.CREATED)
-	public CheckingAccount addCheckingAccount(@PathVariable("id") long id, @RequestBody @Valid CheckingAccount checkingAccount) 
-	{
-		AccountHolder[] accHolders = MeritBank.getAccountHolders();		
-		accHolders[id].addCheckingAccount(checkingAccount);
-		return checkingAccount;
-	}
-	
-	@PostMapping(value = "/AccountHolder/{id}/CheckingAccount")
-	@ResponseStatus(HttpStatus.CREATED)
-	public CheckingAccount addCheckingToAccountHolder(@PathVariable("id") long id, @RequestBody CheckingAccount checkingAccount) throws NotFoundException, ExceedsCombinedBalanceLimitException, ExceedsFraudSuspicionLimitException {
-		AccountHolder ah = this.getAccountHolderById(id);
-		ah.addCheckingAccount(checkingAccount);
+	public CheckingAccount addCheckingToAccountHolder(@PathVariable long id, @RequestBody CheckingAccount checkingAccount) 
+			throws NotFoundException {
+		AccountHolder accountHolder = MeritBank.getAccountHolder(id);
+		accountHolder.addCheckingAccount(checkingAccount);
 		return checkingAccount;
 	}
 	
 	// TODO complete
-	@GetMapping(value = "/AccountHolder/{id}/CheckingAccount")
-	public CheckingAccount[] getAccountHolderCheckingAccounts(@PathVariable("id") long id) throws NotFoundException {
-		AccountHolder ah = this.getAccountHolderById(id);
-		return ah.getCheckingAccounts();
+	@GetMapping(value = "/accountHolder/{id}/checkingAccounts")
+	public CheckingAccount[] getAccountHolderCheckingAccounts(@PathVariable long id) 
+			throws NotFoundException {
+		AccountHolder accountHolder = this.getAccountHolderById(id);
+		return accountHolder.getCheckingAccounts();
+	}
+	
+	
+	@GetMapping(value = "/accountHolders")
+	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
+	public List<AccountHolder> getAccountHolders(){
+		return Arrays.asList(MeritBank.getAccountHolders());
+	}
+	
+	@GetMapping(value = "/accountHolders/{id}")
+	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
+	public AccountHolder getAccountHolderById(@PathVariable long id) throws NotFoundException {
+		AccountHolder accountHolder = MeritBank.getAccountHolder(id);
+		if(accountHolder == null) { 
+			//logger.warn("No account exists"); 
+			throw new NotFoundException("Account Not Found"); 
+		}
+		return accountHolder;
 	}
 
 //	/customers/{customerId}/accounts/{accountId}

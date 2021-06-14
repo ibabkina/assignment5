@@ -18,8 +18,8 @@ import java.lang.Exception;
 
 public class AccountHolder implements Comparable<AccountHolder> {
 	
-	static int nextId = 1;
-	int id;
+	static long nextId = 1;
+	long id;
 	
 	@NotBlank
 	private String firstName;
@@ -69,11 +69,11 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	
 	
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
