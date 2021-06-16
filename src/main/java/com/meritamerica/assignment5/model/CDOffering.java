@@ -1,6 +1,9 @@
 package com.meritamerica.assignment5.model;
 
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import org.hibernate.validator.constraints.Range;
@@ -18,22 +21,20 @@ public class CDOffering {
 	static int nextId = 1;
 	int id;
 	
-	@Positive(message = "Term must be positive")
+//	@Positive(message = "Term must be positive")
 	@Range(min=1, message = "Term must be 1 or more years")
-	private Integer term;
+	private int term;
 	
 	@Positive(message = "Interest Rate must be positive")
-	@Range(min=0, max=1, message = "Interest Rate must be between 0 and 1")
-	private Double interestRate;
+	@DecimalMin(value="0.0000", message = "Interest Rate must be mare than 0")
+	@DecimalMax(value="0.9999", message = "Interest Rate must be less than 1")
+//	@NotBlank
+	private double interestRate;
 	
-//	/**
-//	 * Default constructor 
-//	 */
-//	public CDOffering(){
-//		this.id = nextId++;
-//		this.term = 0;
-//		this.interestRate = 0.0;
-//	}
+	/**
+	 * Default constructor 
+	 */
+	public CDOffering(){ this.id = nextId++; }
 	
 	/**
 	 * @param term

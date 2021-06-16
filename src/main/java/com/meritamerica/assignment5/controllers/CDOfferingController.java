@@ -19,25 +19,8 @@ import com.meritamerica.assignment5.model.MeritBank;
 @RestController
 public class CDOfferingController {
 
-	List<CDOffering> cdOfferings = new ArrayList<CDOffering>();
 	
 	
-	@GetMapping(value = "/cdOfferings")
-	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
-	public List<CDOffering> getCDOfferings(){
-		return MeritBank.getCDOfferings();   // return Arrays.asList(MeritBank.getCDOfferings());
-	}
 	
-	@PostMapping(value = "/cdOfferings")
-	@ResponseStatus(HttpStatus.CREATED)
-	public CDOffering addCDOffering(@RequestBody @Valid CDOffering cdOffering) {
-		
-	
-//		if(cdOffering.getInterestRate() <= 0 || cdOffering.getInterestRate() >= 1 || cdOffering.getTerm() <= 0) {
-//			throw new MissingFieldException("term or interestRate not within bounds"); }
-		cdOfferings.add(cdOffering);
-		MeritBank.setCDOfferings(cdOfferings);  // (CDOffering)cdOfferings.toArray());
-		return cdOffering;
-	}
 	
 }

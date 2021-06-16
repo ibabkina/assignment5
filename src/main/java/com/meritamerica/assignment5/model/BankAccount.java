@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import org.hibernate.validator.constraints.Range;
@@ -19,10 +20,10 @@ import org.hibernate.validator.constraints.Range;
  
 public class BankAccount {
 	
-	
+//	@Min(value = 0 , message = "Value should be greater or equal to 0")
 	protected double balance;
 	
-	@Positive
+//	@Min(value = 0 , message = "Value should be greater or equal to 0")
 	protected double interestRate; 
 	
 	protected long accountNumber;
@@ -33,7 +34,10 @@ public class BankAccount {
 	/**
 	 * Default constructor 
 	 */
-	public BankAccount() {}
+	public BankAccount() {
+		this.accountNumber = MeritBank.getNextAccountNumber();
+		this.accountOpenedOn = new Date();
+	}
 
 	/**
 	 * @param balance
@@ -99,6 +103,11 @@ public class BankAccount {
 	public Date getOpenedOn() { return accountOpenedOn; }
 	
 	/**
+	 * @param dateOpenedOn the dateOpenedOn to set
+	 */
+	public void setOpenedOn(Date accountOpenedOn) { this.accountOpenedOn = accountOpenedOn; }
+	
+	/**
 	 * @return the balance
 	 */
 	public double getBalance() { return balance; }
@@ -114,11 +123,16 @@ public class BankAccount {
 	public double getInterestRate() { return interestRate; }
 	
 	/**
-	 * @param amount
-	 * @return boolean: success or fail
-	 * @throws NegativeAmountException 
-	 * @throws ExceedsAvailableBalanceException 
+	 * @param interestRate the interestRate to set
 	 */
+	public void setInterestRate(double interestRate) { this.interestRate = interestRate; }
+	
+//	/**
+//	 * @param amount
+//	 * @return boolean: success or fail
+//	 * @throws NegativeAmountException 
+//	 * @throws ExceedsAvailableBalanceException 
+//	 */
 //	boolean withdraw(double amount) throws ExceedsFraudSuspicionLimitException { 						
 //		try {
 //			if(amount <= 0.0) { throw new NegativeAmountException("Amount must be > $0.00"); } 

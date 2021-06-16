@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 
 public class CheckingAccount extends BankAccount {
 	
-	//private double interestRate = 0.0001;
+	private double interestRate = 0.0001;
 	
 	/**
 	 * Default constructor 

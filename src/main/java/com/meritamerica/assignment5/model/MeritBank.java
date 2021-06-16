@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import com.meritamerica.assignment5.exceptions.ExceedsCombinedBalanceLimitException;
 import com.meritamerica.assignment5.exceptions.NotExistException;
 import com.meritamerica.assignment5.exceptions.NotFoundException;
 
@@ -25,8 +26,8 @@ import com.meritamerica.assignment5.exceptions.NotFoundException;
 public class MeritBank {
 	
 	private static AccountHolder[] accountHolders = new AccountHolder[0]; 
-//	private static CDOffering[] cdOfferings; 
-	private static List<CDOffering> cdOfferings = new ArrayList<CDOffering>();
+	private static CDOffering[] cdOfferings; 
+//	private static List<CDOffering> cdOfferings = new ArrayList<CDOffering>();
 	private static long nextAccountNumber = 1000;
 	private static final double MAX_TRANSACTION_AMOUNT = 1000.00;
 //	private static FraudQueue fraudQueue = new FraudQueue();
@@ -260,17 +261,27 @@ public class MeritBank {
 	/**
 	 * @return the accountHolder 
 	 */
-	public static AccountHolder getAccountHolder(long id) 
-			throws NotExistException, NotFoundException {
+	public static AccountHolder getAccountHolder(long id) {
 		
-		if(getAccountHolders().length <= 0) { throw new NotExistException("Account Holderds Not Exist"); }
+		if(getAccountHolders().length <= 0) { return null; }
     	
 		for(AccountHolder accountHolder: getAccountHolders()) {
     		if(accountHolder.getId() == id) { return accountHolder; }
-    	}
-		
-		throw new NotFoundException("Account Not Found");
+    	}		
+//		throw new NotFoundException("Account Not Found");
+		return null;
     }
+//	public static AccountHolder getAccountHolder(long id) 
+//			throws NotFoundException {
+//		
+//		if(getAccountHolders().length <= 0) { return null; }
+//    	
+//		for(AccountHolder accountHolder: getAccountHolders()) {
+//    		if(accountHolder.getId() == id) { return accountHolder; }
+//    	}
+//		
+//		throw new NotFoundException("Account Not Found");
+//    }
 	
 
     	
@@ -309,7 +320,19 @@ public class MeritBank {
 		}	
 		System.out.println("Second best is : " + secondBest.getInterestRate());
 		return secondBest;
-	}		
+	}
+	
+	/**
+	 * @param depositAmount
+	 * @return the secondBestCDOffering
+	 */
+	public static CDOffering getCDOffering(int id) {
+		if(cdOfferings == null) { return null;}
+		for(CDOffering cdOffering : cdOfferings) {
+			if(cdOffering.getId() == id) { return cdOffering; }
+		}
+		return null;
+	}
 	
 //	public static CDOffering getSecondBestCDOffering(double depositAmount) {
 //		
@@ -333,25 +356,38 @@ public class MeritBank {
 //	      return cdOfferings[cdOfferings.length - 2];
 //	}
 	
-//	/**
-//	 * @return the cdOfferings
-//	 */
-//	public static CDOffering[] getCDOfferings() { return cdOfferings; }
-	
 	/**
 	 * @return the cdOfferings
 	 */
-	public static List<CDOffering> getCDOfferings() { return cdOfferings; }
+	public static CDOffering[] getCDOfferings() { return cdOfferings; }
 	
 //	/**
-//	 * @param cdOfferings the cdOfferings to set
+//	 * @return the cdOfferings
 //	 */
-//	public static void setCDOfferings(CDOffering[] offerings) { MeritBank.cdOfferings = offerings; }
+//	public static List<CDOffering> getCDOfferings() { return Arrays.asList(cdOfferings); }
 	
 	/**
 	 * @param cdOfferings the cdOfferings to set
 	 */
-	public static void setCDOfferings(List<CDOffering> offerings) { MeritBank.cdOfferings = offerings; }
+	public static void setCDOfferings(CDOffering[] offerings) { MeritBank.cdOfferings = offerings; }
+	
+	
+	public static CDOffering addCDOffering(CDOffering cdOffering) {
+		if(cdOfferings == null) { cdOfferings = new CDOffering[0]; }
+		CDOffering[] temp = new CDOffering[cdOfferings.length + 1];
+		for (int i = 0 ; i < cdOfferings.length; i++) {
+			temp[i] = cdOfferings[i];
+		}
+		temp[temp.length - 1] = cdOffering;
+		cdOfferings = temp;
+		
+		return cdOffering;
+	}
+	
+//	/**
+//	 * @param cdOfferings the cdOfferings to set
+//	 */
+//	public static void setCDOfferings(List<CDOffering> offerings) { MeritBank.cdOfferings = offerings; }
 	
 	/**
 	 * Removes all offerings

@@ -208,7 +208,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	 * @param offering
 	 * @return the CDAccount
 	 */
-	CDAccount addCDAccount(CDOffering offering, double openingBalance) throws ExceedsFraudSuspicionLimitException { 
+	public CDAccount addCDAccount(CDOffering offering, double openingBalance) throws ExceedsFraudSuspicionLimitException { 
 		if (offering == null) { // || MeritBank.cdOfferings.length <= 0 ) { 
 			System.out.println("The CD account could not be created! No CD offerings are available.");
 			return null;
@@ -225,7 +225,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	 * @param cdAccount
 	 * @return the cdAccount
 	 */
-	CDAccount addCDAccount(CDAccount cdAccount) {
+	public CDAccount addCDAccount(CDAccount cdAccount) {
 		CDAccount[] temp = new CDAccount[cdAccounts.length + 1];
 		for (int i = 0 ; i < cdAccounts.length; i++) {
 			temp[i] = cdAccounts[i];
@@ -271,7 +271,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	/**
 	 * @return the combined balance of savings accounts
 	 */
-	double getSavingsBalance() {
+	public double getSavingsBalance() {
 		double total = 0;
 		if(savingsAccounts != null) {
 			for (SavingsAccount a : savingsAccounts) {
@@ -291,7 +291,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	/**
 	 * @return the combined balance of cd accounts
 	 */
-	double getCDBalance() {
+	public double getCDBalance() {
 		double total = 0;
 		if(cdAccounts != null) {
 			for (CDAccount a : cdAccounts) {
@@ -304,7 +304,7 @@ public class AccountHolder implements Comparable<AccountHolder> {
 	/**
 	 * @return the combined balance of checking, savings and cd accounts 
 	 */
-	double getCombinedBalance() {
+	public double getCombinedBalance() {
 		return this.getCheckingBalance()
 				+this.getSavingsBalance()
 				+this.getCDBalance();	

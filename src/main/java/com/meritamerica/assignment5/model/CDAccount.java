@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.validation.constraints.Positive;
+
 /**
  * This program creates a CD account for a client.
  * 
@@ -15,6 +17,12 @@ import java.util.Date;
 public class CDAccount extends BankAccount{
 	
 	private int term;
+	
+	
+	/**
+	 * Default constructor 
+	 */
+	public CDAccount() { super(); }
 	
 	/**
 	 * @param offering
@@ -69,7 +77,12 @@ public class CDAccount extends BankAccount{
 	/**
 	 * @return the term
 	 */
-	int getTerm() { return term; }
+	public int getTerm() { return term; }
+	
+	/**
+	 * @param term the term to set
+	 */
+	public void setTerm(int term) { this.term = term; }
 
 //	/**
 //	 * @return the startDate 
@@ -84,10 +97,7 @@ public class CDAccount extends BankAccount{
 	 */
 	double futureValue(){ return this.balance * Math.pow(1 + interestRate, term); }
 	
-	/**
-	 * @param term the term to set
-	 */
-	public void setTerm(int term) { this.term = term; }
+	
 
 	@Override
 	public String toString() {

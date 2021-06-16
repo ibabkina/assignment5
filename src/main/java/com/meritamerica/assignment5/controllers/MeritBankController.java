@@ -23,6 +23,8 @@ import com.meritamerica.assignment5.exceptions.NoSuchResourceFoundException;
 import com.meritamerica.assignment5.exceptions.NotExistException;
 import com.meritamerica.assignment5.exceptions.NotFoundException;
 import com.meritamerica.assignment5.model.AccountHolder;
+import com.meritamerica.assignment5.model.BankAccount;
+import com.meritamerica.assignment5.model.CDOffering;
 import com.meritamerica.assignment5.model.MeritBank;
 import com.meritamerica.assignment5.model.Post;
 
@@ -31,50 +33,36 @@ public class MeritBankController {
 	
 	Logger logger = LoggerFactory.getLogger(MeritAmericaBankApplication.class);
 	
-	@GetMapping(value = "/accountHolders")
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String greetMe() {
+		return "<html><h2>Welcome to the Spring Framework</h2></html>"; //"hello world";
+	}
+
+	@GetMapping(value = "/cdOfferings")
 	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
-	public List<AccountHolder> getAccountHolders(){
-		return Arrays.asList(MeritBank.getAccountHolders());
+	public CDOffering[] getCDOfferings() throws NotFoundException {
+		CDOffering[] cdOfferings = MeritBank.getCDOfferings();
+		if(cdOfferings == null) { throw new NotFoundException("Offerings Not Found"); }
+		return cdOfferings;  
 	}
 	
-	@GetMapping(value = "/accountHolders/{id}")
-	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
-	public AccountHolder getAccountHolderById(@PathVariable long id) {
-		
-		AccountHolder accountHolder = null;
-		
-		try {
-			
-			accountHolder = MeritBank.getAccountHolder(id);	
-		
-		} catch (NotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
-			logger.warn("No accountHolder exists");
-			e.printStackTrace();
-		}
-		return accountHolder;
-	}
-	
-	@PostMapping(value = "/accountHolders")
+	@PostMapping(value = "/cdOfferings")
 	@ResponseStatus(HttpStatus.CREATED)
-	public AccountHolder addAccountHolder(@RequestBody @Valid AccountHolder accountHolder) {
-		MeritBank.addAccountHolder(accountHolder);
-		return accountHolder;
+	public CDOffering addCDOffering(@RequestBody @Valid CDOffering cdOffering) {
+		MeritBank.addCDOffering(cdOffering);  
+		return cdOffering;
 	}
 	
-	
+	@GetMapping(value = "/bankAccounts/{accountId")
+	@ResponseStatus(HttpStatus.OK) 
+	public BankAccount getAccount(@PathVariable long customerId,
+			@PathVariable long accountId) {
+		return MeritBank.getBankAccount(accountId);	
+	}
 	
 //	List<String> strings = new ArrayList<String>();
 //	List<Post> posts = new ArrayList<Post>();
 //	
-//	@RequestMapping(value = "/", method = RequestMethod.GET)
-//	public String test() {
-//		return "hello world";
-//	}
 //	
 //	@GetMapping(value = "/strings")
 //	public List<String> getStrings() {
