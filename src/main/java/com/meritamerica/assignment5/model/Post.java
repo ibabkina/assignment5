@@ -2,6 +2,13 @@ package com.meritamerica.assignment5.model;
 
 import javax.validation.constraints.NotBlank;
 
+
+/**
+ * This class is not related this Bank project. It's just an Spring Boot example 
+ * 
+ * @author Irina Babkina 
+ */
+
 public class Post {
 	static int nextId = 0;
 	int id;

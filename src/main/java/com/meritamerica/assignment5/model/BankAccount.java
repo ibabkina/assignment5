@@ -20,7 +20,8 @@ import org.hibernate.validator.constraints.Range;
  
 public class BankAccount {
 	
-//	@Min(value = 0 , message = "Value should be greater or equal to 0")
+//	@Min(value = 0 , message = "Value should be greater than 0")
+	@Positive(message = "Value should be greater than 0")
 	protected double balance;
 	
 //	@Min(value = 0 , message = "Value should be greater or equal to 0")

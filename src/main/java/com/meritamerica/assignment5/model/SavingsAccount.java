@@ -18,7 +18,7 @@ public class SavingsAccount extends BankAccount {
 	/**
 	 * Default constructor 
 	 */
-	public SavingsAccount() { super(); }
+	public SavingsAccount() { super(0, 0.01); }
 	
 	/**
 	 * @param openingBalance

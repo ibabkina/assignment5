@@ -7,6 +7,7 @@ package com.meritamerica.assignment5.exceptions;
  * @author irinababkina
  *
  */
+
 public class ExceedsAvailableBalanceException extends Exception {
 
 	/**

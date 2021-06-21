@@ -1,5 +1,196 @@
 /* Test Cases */
 
+
+------ CD Offerings GET ---------
+
+GET http://localhost:8080/cdOfferings
+
+
+
+------ CD Offerings POST ---------
+
+POST http://localhost:8080/cdOfferings
+
+---- Status 201 Created: ----
+{
+    "interestRate": 0.625,
+    "term": 10
+}
+
+---- Status 400 Bad Request: -----
+{
+    "interestRate": "-0.5",	// < 0
+    "term": "5"
+}
+
+{
+    "interestRate": 0,  	// = 0
+    "term": 5
+}
+
+{
+    "interestRate": 1,  	// = 1
+    "term": 5
+}
+
+{
+    "interestRate": 1.025, 	// > 1
+    "term": 5
+}
+
+{
+    "interestRate": 0.375,
+    "term": 0.5				// < 1
+}
+
+{
+    "interestRate": 0.375  	// term is missing
+}
+
+{
+    "term": "5"				// interestRate is missing
+}
+
+
+
+------ AccountHolders GET ---------
+
+GET http://localhost:8080/accountHolders
+
+GET http://localhost:8080/accountHolders/1
+
+GET http://localhost:8080/accountHolders/2
+
+
+
+------ AccountHolders POST ---------
+
+POST http://localhost:8080/accountHolders
+
+---- Status 201 Created: ----
+{
+    "firstName": "Sadiq",
+    "middleName": "Sadiq",
+    "lastName" : "Manji",
+    "ssn" : "123456789"
+}
+{
+    "firstName": "Sadiq",
+    "middleName": "",
+    "lastName" : "Manji",
+    "ssn" : "123456789"
+}
+
+---- Status 400 Bad Request: ----
+{
+    "firstName": "",			// firstName is empty/blank
+    "middleName": "",
+    "lastName" : "Moon",
+    "ssn" : "333456789"
+}
+
+{
+    "middleName": "",			// firstName is missing/null
+    "lastName" : "Moon",
+    "ssn" : "333456789"
+}
+
+{
+    "firstName": "Sadiq",
+    "middleName": "",
+    "lastName" : "",			// lastName is empty/blank
+    "ssn" : "123456789"
+}
+
+{
+    "firstName": "Sadiq",		// lastName is missing/null
+    "middleName": "",
+    "ssn" : "123456789"
+}
+
+{
+    "firstName": "Sadiq",
+    "middleName": "",
+    "lastName" : "Manji",
+    "ssn" : ""					// SSN is empty/blank
+}
+
+{
+    "firstName": "Sadiq",		// SSN is missing/null
+    "middleName": "",
+    "lastName" : "Manji"
+}
+
+
+
+------ CheckingAccounts GET ---------
+
+GET http://localhost:8080/accountHolders/2/checkingAccounts
+
+
+------ CheckingAccounts POST ---------
+
+POST http://localhost:8080/accountHolders/2/checkingAccounts
+
+---- Status 201 Created: ----
+{
+"balance" : 1500
+}
+{
+"balance" : "500", 
+"openedOn" : "2020-09-15"
+}
+
+---- Status 400 Bad Request: ----
+
+POST http://localhost:8080/accountHolders/109000/checkingAccounts   // AccountHolder not exists with given ID
+
+
+{
+"balance" : -1500  				// Balance < 0
+}
+{
+"balance" : 250001				// Exceeds combined balance
+}
+{
+"interestRate" : "0.15",  		// Balance is missing/null 
+"openedOn" : "2020-09-15"
+}
+
+
+------ SavigsAccounts POST --------- 
+
+POST http://localhost:8080/accountHolders/2/savigsAccounts
+
+---- Status 201 Created: ----
+{
+"balance" : 1500
+}
+{
+"balance" : "500", 
+"openedOn" : "2020-09-15"
+}
+
+---- Status 400 Bad Request: ----
+
+POST http://localhost:8080/accountHolders/109000/savigsAccounts   // AccountHolder not exists with given ID
+
+
+{
+"balance" : -1500  				// Balance < 0
+}
+{
+"balance" : 250001				// Exceeds combined balance
+}
+{
+"interestRate" : "0.15",  		// Balance is missing/null 
+"openedOn" : "2020-09-15"
+}
+
+
+
+
+
 pm.test("Request is successful with a status code of 200", function () {
   pm.response.to.have.status(200);
 });

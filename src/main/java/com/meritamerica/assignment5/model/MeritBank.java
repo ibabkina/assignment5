@@ -28,7 +28,7 @@ public class MeritBank {
 	private static AccountHolder[] accountHolders = new AccountHolder[0]; 
 	private static CDOffering[] cdOfferings; 
 //	private static List<CDOffering> cdOfferings = new ArrayList<CDOffering>();
-	private static long nextAccountNumber = 1000;
+	private static long nextAccountNumber = 0;
 	private static final double MAX_TRANSACTION_AMOUNT = 1000.00;
 //	private static FraudQueue fraudQueue = new FraudQueue();
 
@@ -404,7 +404,9 @@ public class MeritBank {
 	 */
 	public static long getNextAccountNumber() {
 //		nextAccountNumber++;
-		return nextAccountNumber++; //first returns, then increments
+//		return nextAccountNumber++; //first returns, then increments
+		return ++nextAccountNumber; 
+		
 	}
 	
 	/**

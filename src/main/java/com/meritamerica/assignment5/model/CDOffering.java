@@ -84,11 +84,13 @@ public class CDOffering {
 	
 	@Override
 	public String toString() {
-		return "\nCD Offering Term : " + this.getTerm()+ "\nCD Offering Rate : " + this.getInterestRate();
+		return "\nCD Offering id : " + this.getId()
+				+"\nCD Offering Term : " + this.getTerm()
+				+ "\nCD Offering Rate : " + this.getInterestRate();
 		}
 	
 	public String writeToString() {
-		return Integer.toString(this.getTerm()) + "," 
+		return Integer.toString(this.getId()) + Integer.toString(this.getTerm()) + "," 
 				+ Double.toString(this.getInterestRate()); 
 	}
 }

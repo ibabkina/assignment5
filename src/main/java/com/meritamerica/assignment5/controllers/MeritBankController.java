@@ -31,19 +31,25 @@ import com.meritamerica.assignment5.model.Post;
 @RestController
 public class MeritBankController {
 	
-	Logger logger = LoggerFactory.getLogger(MeritAmericaBankApplication.class);
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String greetMe() {
-		return "<html><h2>Welcome to the Spring Framework</h2></html>"; //"hello world";
+		return "<html><h2>Welcome to Merit Bank Assignment 5</h2></html>"; 
 	}
 
 	@GetMapping(value = "/cdOfferings")
 	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
-	public CDOffering[] getCDOfferings() throws NotFoundException {
+	public CDOffering[] getCDOfferings() { // throws NotFoundException {
 		CDOffering[] cdOfferings = MeritBank.getCDOfferings();
-		if(cdOfferings == null) { throw new NotFoundException("Offerings Not Found"); }
+//		if(cdOfferings == null) { throw new NotFoundException("Offerings Not Found"); }
 		return cdOfferings;  
+	}
+	
+	@GetMapping(value = "/cdOfferings/{cdOfferingId}")
+	@ResponseStatus(HttpStatus.OK) //Redundant but can do if your team prefers
+	public CDOffering getCDOfferingById(@PathVariable int cdOfferingId) throws NotFoundException {
+		CDOffering cdOffering = MeritBank.getCDOffering(cdOfferingId);
+//		if(cdOfferings == null) { throw new NotFoundException("Offerings Not Found"); }
+		return cdOffering;  
 	}
 	
 	@PostMapping(value = "/cdOfferings")

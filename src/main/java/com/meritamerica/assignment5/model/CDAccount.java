@@ -18,7 +18,17 @@ public class CDAccount extends BankAccount{
 	
 	private int term;
 	
+	private CDOffering cdOffering;
 	
+	
+	public CDOffering getCdOffering() {
+		return cdOffering;
+	}
+
+	public void setCdOffering(CDOffering cdOffering) {
+		this.cdOffering = cdOffering;
+	}
+
 	/**
 	 * Default constructor 
 	 */
@@ -75,9 +85,21 @@ public class CDAccount extends BankAccount{
 	public double getInterestRate() { return this.interestRate; }
 	
 	/**
+	 * @param cdOffering
+	 */
+	public void setInterestRate(CDOffering cdOffering) { 
+		super.setInterestRate(cdOffering.getInterestRate());
+	}
+	
+	/**
 	 * @return the term
 	 */
 	public int getTerm() { return term; }
+	
+	/**
+	 * @param cdOffering
+	 */
+	public void setTerm(CDOffering cdOffering) { this.term = cdOffering.getTerm(); }
 	
 	/**
 	 * @param term the term to set
